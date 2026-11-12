@@ -1,0 +1,48 @@
+CUSTOMER PRODUCT REVIEW SEARCH
+PREPROCESSING REPORT
+=======================================================
+
+1. DATASET SUMMARY
+-------------------------------------------------------
+Original rows: 20000
+Empty document IDs: 0
+Duplicate document IDs: 0
+Rows after removing empty reviews and missing IDs: 19999
+Duplicate full documents removed: 0
+Rows after duplicate removal: 19999
+Empty processed documents removed: 18
+Final processed documents: 19981
+Total removed rows: 19
+
+2. PREPROCESSING OPERATIONS
+-------------------------------------------------------
+1. Convert text to lowercase.
+2. Preserve negation words.
+3. Tokenize text into words and numbers.
+4. Remove English stop words except negations.
+5. Remove single-letter alphabetic tokens.
+6. Apply Porter Stemming.
+7. Remove empty processed documents.
+
+3. TOKEN STATISTICS
+-------------------------------------------------------
+Average tokens per document: 42.26
+Minimum tokens: 1
+Maximum tokens: 917
+
+4. OUTPUT INFORMATION
+-------------------------------------------------------
+Output file: documents.csv
+Report file: preprocessing_report.txt
+Original metadata and text fields are preserved.
+Additional fields: document_text, processed_text, token_count
+
+5. SAMPLE PROCESSED DOCUMENT
+-------------------------------------------------------
+Document ID: R00001
+Original text: Smells like gasoline! Going back! First & most offensive: they reek of gasoline so if you are sensitive/allergic to petroleum products like I am you will want to pass on these.  Second: the phone adapter is useless as-is. Mine was not drilled far enough to be able to tighten it into place for my iPhone 12 max. It just slipped & slid all over. Stupid me putting the adapter together first without picking up the binoculars to smell them bc I wasted 15 minutes trying to figure out how to put the ada
+Processed text: smell like gasolin go offens reek gasolin sensit allerg petroleum product like want pass second phone adapt useless not drill far abl tighten place iphon 12 max just slip slid stupid put adapt pick binocular smell bc wast 15 minut tri figur adapt bc doe not come instruct come websit total pain tripod useless not trust io hold 1600 phone nor mattel barbi matter just ineffici job imo order tri honest review did don glove eyewear check binocular averag miss 10 film cost lower edg lens ruin video ph
+Token count: 121
+
+=======================================================
+END OF PREPROCESSING REPORT
