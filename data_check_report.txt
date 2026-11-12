@@ -1,0 +1,91 @@
+CUSTOMER PRODUCT REVIEW SEARCH
+RAW DATA QUALITY ASSESSMENT
+=======================================================
+
+1. DATASET OVERVIEW
+-------------------------------------------------------
+Total rows: 20000
+Total columns: 7
+Required columns: 7
+Missing required columns: 0
+
+Available columns:
+doc_id, title, review_text, rating, product_id, timestamp, verified_purchase
+
+2. MISSING AND EMPTY VALUES
+-------------------------------------------------------
+doc_id: 0 missing values
+title: 3 missing values
+review_text: 1 missing values
+rating: 0 missing values
+product_id: 0 missing values
+timestamp: 0 missing values
+verified_purchase: 0 missing values
+
+Empty document IDs: 0
+Empty titles: 3
+Empty review texts: 1
+Empty product IDs: 0
+
+3. DUPLICATE CHECK
+-------------------------------------------------------
+Duplicate document IDs: 0
+Duplicate full documents: 0
+
+4. RATING VALIDATION
+-------------------------------------------------------
+Missing or non-numeric ratings: 0
+Ratings outside the range 1-5: 0
+
+Rating distribution (valid ratings):
+1.0: 1495
+2.0: 764
+3.0: 1345
+4.0: 2922
+5.0: 13474
+
+5. REVIEW LENGTH STATISTICS
+-------------------------------------------------------
+Reviews with non-empty text: 19999
+
+Character length:
+Minimum: 1
+Maximum: 9989
+Average: 438.5
+Median: 204.0
+
+Word length:
+Minimum: 1
+Maximum: 1790
+Average: 80.75
+Median: 38.0
+
+6. TIMESTAMP VALIDATION
+-------------------------------------------------------
+Missing or non-numeric timestamps: 0
+Non-positive timestamps: 0
+
+7. VERIFIED PURCHASE CHECK
+-------------------------------------------------------
+Invalid verified purchase values: 0
+
+Verified purchase distribution:
+false: 5779
+true: 14221
+
+8. FINAL DATASET SUMMARY
+-------------------------------------------------------
+Original rows: 20000
+Rows with non-empty reviews: 19999
+Rows after removing empty reviews, missing IDs, and duplicate documents: 19999
+Removed rows: 1
+Retained data percentage: 100.0%
+
+9. SAMPLE REVIEW
+-------------------------------------------------------
+Document ID: R00001
+Title: Smells like gasoline! Going back!
+Review: First & most offensive: they reek of gasoline so if you are sensitive/allergic to petroleum products like I am you will want to pass on these.  Second: the phone adapter is useless as-is. Mine was not drilled far enough to be able to tighten it into place for my iPhone 12 max. It just slipped & slid all over. Stupid me putting the adapter together first without picking up the binoculars to smell them bc I wasted 15 minutes trying to figure out how to put the adapter together bc it does not come 
+
+=======================================================
+END OF DATA QUALITY REPORT
