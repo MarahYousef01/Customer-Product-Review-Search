@@ -5,19 +5,39 @@
 
 **Original dataset:** [Amazon Reviews 2023 - McAuley Lab](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023)
 
-The downloader reads the official Electronics review file as a compressed stream and stops after collecting 1,200 unique reviews. It does not download the full 6+ GB file.
+This project downloads a sample of Electronics reviews, validates the raw dataset, preprocesses the review text, and prepares a cleaned CSV for search indexing.
 
-## My part: Data Collection, Data Checking and Preprocessing
+## Project structure
 
-### Files
+```text
+Customer-Product-Review-Search/
+├── README.md
+├── requirements.txt
+├── src/
+│   ├── data_collection/
+│   │   └── download_reviews.py
+│   ├── data_quality/
+│   │   └── data_check.py
+│   └── preprocessing/
+│       └── preprocessing.py
+├── data/
+│   ├── raw/
+│   │   └── amazon_reviews_raw.csv
+│   └── processed/
+│       └── documents.csv
+└── reports/
+    ├── data_check_report.txt
+    └── preprocessing_report.txt
+```
 
-- `download_reviews.py`: downloads up to 1,200 unique Electronics reviews from the official Amazon Reviews 2023 compressed data file using streaming.
-- `data_check.py`: checks the raw data, required columns, missing values and duplicate records.
-- `preprocessing.py`: cleans and preprocesses the review text.
-- `amazon_reviews_raw.csv`: downloaded original review sample.
-- `documents.csv`: cleaned documents for the search engine.
-- `data_check_report.txt`: raw data quality report.
-- `preprocessing_report.txt`: preprocessing summary and before/after example.
+## What each part does
+
+- `src/data_collection/download_reviews.py`: downloads a streaming sample of Amazon Electronics reviews and writes the raw CSV to `data/raw/`.
+- `src/data_quality/data_check.py`: checks for missing values, duplicates, invalid ratings, malformed timestamps, and other data-quality issues; writes a summary to `reports/data_check_report.txt`.
+- `src/preprocessing/preprocessing.py`: lowercases text, removes stop words, applies stemming, removes empty records, and saves the cleaned dataset to `data/processed/documents.csv`.
+- `data/raw/amazon_reviews_raw.csv`: raw review dataset after the initial download.
+- `data/processed/documents.csv`: final searchable document dataset with original fields plus `document_text`, `processed_text`, and `token_count`.
+- `reports/*.txt`: generated quality and preprocessing summaries for auditing and debugging.
 
 ## Setup
 
@@ -27,44 +47,44 @@ Install the required libraries:
 python -m pip install -r requirements.txt
 ```
 
-## Run the files in this order
+## Run the workflow in order
 
 ### 1. Download the reviews
 
 ```bash
-python download_reviews.py
+python src/data_collection/download_reviews.py
 ```
-
-The script collects up to 1,200 unique reviews. It uses streaming, so it does not download the complete dataset.
 
 ### 2. Check the raw data
 
 ```bash
-python data_check.py
+python src/data_quality/data_check.py
 ```
 
 ### 3. Preprocess the reviews
 
 ```bash
-python preprocessing.py
+python src/preprocessing/preprocessing.py
 ```
 
-The preprocessing steps are:
+## Preprocessing pipeline
 
-1. Lowercase.
-2. Tokenization.
-3. Remove English stopwords.
-4. Porter stemming.
-5. Remove empty and duplicate documents.
+1. Lowercase text.
+2. Preserve negation words such as "not" and "no".
+3. Tokenize text into words and numbers.
+4. Remove English stop words except negations.
+5. Remove single-letter noise.
+6. Apply Porter stemming.
+7. Drop empty processed documents.
 
 The final dataset keeps the original review information and adds `document_text` and `processed_text`.
 
 ## Important for the team
 
-Use **the same `documents.csv` file** for both Boolean Search and Ranked Search.
+Use the same `data/processed/documents.csv` file for both Boolean Search and Ranked Search.
 
 - Use `doc_id` to identify each document.
-- Use `processed_text` to build the Inverted Index and TF-IDF.
-- Keep `document_text` or `review_text` to display the original review in search results.
+- Use `processed_text` to build the inverted index and TF-IDF.
+- Keep `document_text` or `review_text` for displaying original review content.
 
 The preprocessing script checks that at least 100 searchable documents remain.

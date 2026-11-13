@@ -1,11 +1,16 @@
 
 """Inspect and validate raw Amazon Electronics reviews before preprocessing."""
 
-import pandas as pd
 import re
+from pathlib import Path
 
-INPUT_FILE = "amazon_reviews_raw.csv"
-REPORT_FILE = "data_check_report.txt"
+import pandas as pd
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+INPUT_FILE = ROOT_DIR / "data" / "raw" / "amazon_reviews_raw.csv"
+REPORT_FILE = ROOT_DIR / "reports" / "data_check_report.txt"
+
+REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 REQUIRED_COLUMNS = [
     "doc_id",

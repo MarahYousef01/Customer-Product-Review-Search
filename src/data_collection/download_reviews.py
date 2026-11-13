@@ -5,15 +5,21 @@ import gzip
 import json
 import re
 import ssl
+from pathlib import Path
+
 import certifi
 from urllib.request import Request, urlopen
 
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data" / "raw"
 DATA_URL = (
     "https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/"
     "raw/review_categories/Electronics.jsonl.gz"
 )
-OUTPUT_FILE = "amazon_reviews_raw.csv"
+OUTPUT_FILE = DATA_DIR / "amazon_reviews_raw.csv"
 MAX_RECORDS = 20000
+
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def normalize_for_duplicate_check(text):

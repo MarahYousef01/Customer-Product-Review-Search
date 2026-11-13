@@ -2,16 +2,20 @@
 """Clean and preprocess Amazon Electronics reviews for information retrieval."""
 
 import re
+from pathlib import Path
+
 import pandas as pd
 from nltk.stem import PorterStemmer
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
-
-# Configuration
-INPUT_FILE = "amazon_reviews_raw.csv"
-OUTPUT_FILE = "documents.csv"
-REPORT_FILE = "preprocessing_report.txt"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+INPUT_FILE = ROOT_DIR / "data" / "raw" / "amazon_reviews_raw.csv"
+OUTPUT_FILE = ROOT_DIR / "data" / "processed" / "documents.csv"
+REPORT_FILE = ROOT_DIR / "reports" / "preprocessing_report.txt"
 MIN_DOCUMENTS = 100
+
+OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 REQUIRED_COLUMNS = [
     "doc_id",

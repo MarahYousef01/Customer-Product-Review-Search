@@ -32,8 +32,8 @@ Maximum tokens: 917
 
 4. OUTPUT INFORMATION
 -------------------------------------------------------
-Output file: documents.csv
-Report file: preprocessing_report.txt
+Output file: C:\Users\Power Tech\Downloads\Customer-Product-Review-Search\data\processed\documents.csv
+Report file: C:\Users\Power Tech\Downloads\Customer-Product-Review-Search\reports\preprocessing_report.txt
 Original metadata and text fields are preserved.
 Additional fields: document_text, processed_text, token_count
 
