@@ -1,74 +1,71 @@
-# Import the inverted index
-from inverted_index import inverted_index
+
+# Import the inverted index and dataset
+from inverted_index import inverted_index, data
+
+# Import preprocessing
+from preprocessing.preprocessing import preprocess_text
 
 # Get all document IDs
 all_docs = set(data["doc_id"])
 
 # Get user's query
-query = input("Enter your search query: ").lower()
+query = input("Enter your search query: ").lower().strip()
 
-# Split the query into parts
+# Split the query
 parts = query.split()
 
-# Identify the Boolean operator
-if "and" in parts:
-    operator = "and"
-
-elif "or" in parts:
-    operator = "or"
-
-elif "not" in parts:
-    operator = "not"
-
-else:
-    operator = None
-
-
-# Get the search terms (excluding operators)
-search_terms = []
-
-# Remove Boolean operators from search terms 
-search_terms = [
-    word for word in parts
-    if word not in ["and", "or", "not"]
-]
-
-# Preprocess search terms
-from preprocessing.preprocessing import preprocess_text
+# Remove Boolean operators and preprocess search terms
+operators = ["and", "or", "not"]
 
 search_terms = [
-    preprocess_text(term) for term in search_terms
+    preprocess_text(word)
+    for word in parts
+    if word not in operators
 ]
+
+# Remove empty terms
+search_terms = [term for term in search_terms if term]
 
 # Perform Boolean operations
-if operator == "and":
+if len(search_terms) == 0:
+    result = set()
 
-    if "not" in parts:
-        result = (
-            inverted_index.get(search_terms[0], set())
-            - inverted_index.get(search_terms[1], set())
-        )
-    else:
-        result = (
-            inverted_index.get(search_terms[0], set())
-            & inverted_index.get(search_terms[1], set())
-        )
+elif "and" in parts and "not" in parts:
 
-elif operator == "or":
+    result = (
+        inverted_index.get(search_terms[0], set())
+        - inverted_index.get(search_terms[1], set())
+    )
+
+elif "and" in parts:
+
+    result = (
+        inverted_index.get(search_terms[0], set())
+        & inverted_index.get(search_terms[1], set())
+    )
+
+elif "or" in parts:
 
     result = (
         inverted_index.get(search_terms[0], set())
         | inverted_index.get(search_terms[1], set())
     )
 
-elif operator == "not":
+elif "not" in parts and parts[0] == "not":
 
     result = (
         all_docs - inverted_index.get(search_terms[0], set())
     )
 
+elif "not" in parts:
+
+    result = (
+        inverted_index.get(search_terms[0], set())
+        - inverted_index.get(search_terms[1], set())
+    )
+
 else:
-    result = set()
+    result = inverted_index.get(search_terms[0], set())
 
 # Display matching documents
 print("\nSearch Results:")
@@ -79,11 +76,9 @@ matching_docs = data[data["doc_id"].isin(result)]
 for _, row in matching_docs.iterrows():
     print("Document ID:", row["doc_id"])
     print("Title:", row["title"])
+    print("Review:", row["review_text"])
     print("-" * 40)
 
-print("Total results:", len(matching_docs)) 
+print("Total results:", len(matching_docs))
 
-
-# Reviewed and verified by sondos
-
-
+# Reviewed and verified by Sondos
